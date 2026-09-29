@@ -1,0 +1,148 @@
+.page {
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.back:hover {
+  color: var(--color-accent-highlight);
+}
+
+.inlineLink {
+  color: var(--color-accent-highlight);
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2.5rem;
+
+  background-color: var(--color-bg-main);
+  border: 1px solid var(--color-bg-100);
+  border-radius: var(--border-radius-md);
+  padding: 2rem;
+}
+
+.imageContainer {
+  position: relative;
+  border: 1px solid var(--color-bg-100);
+  border-radius: var(--border-radius-md);
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.imageContainer img {
+  display: block;
+  width: 100%;
+}
+
+.badge {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  background-color: var(--color-accent-warm);
+  padding: 5px 15px;
+  border-bottom-left-radius: var(--border-radius-md);
+  font-weight: 600;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.muted {
+  color: var(--color-bg-600);
+}
+
+.name {
+  margin: 0;
+  font-family: var(--ff-serif);
+  color: var(--color-accent-heading);
+}
+
+.prices {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.price {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.prices[data-discount="true"] .price {
+  font-size: 1.1rem;
+  color: var(--color-bg-600);
+  text-decoration: line-through 3px;
+}
+
+.discountPrice {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--color-accent-1-700);
+}
+
+.description {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-secundary);
+}
+
+.stock {
+  font-weight: 500;
+}
+
+.outOfStock {
+  font-weight: 500;
+  color: var(--color-error);
+}
+
+.actions {
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.quantityLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.quantity {
+  width: 5rem;
+  padding: 10px 15px;
+  border: 1px solid var(--color-bg-200);
+  border-radius: var(--border-radius-sm);
+  outline: none;
+  font-family: var(--ff-sans);
+}
+
+.quantity:focus-visible {
+  border-color: var(--color-accent-highlight);
+}
+
+@media (max-width: 60rem) {
+  .page {
+    padding: 1.5rem;
+  }
+
+  .detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

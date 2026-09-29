@@ -1,0 +1,123 @@
+.card {
+  display: block;
+  /* No se encoge: las filas del inicio hacen scroll horizontal */
+  flex: 0 0 auto;
+  width: 22rem;
+  max-width: 100%;
+
+  text-decoration: none;
+  color: inherit;
+}
+
+.article {
+  height: 100%;
+  min-height: 11rem;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34%;
+
+  background-color: var(--color-bg-main);
+  border: 1px solid var(--color-bg-100);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  cursor: pointer;
+
+  transition:
+    translate var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.card:hover .article,
+.card:focus-visible .article {
+  translate: 0 -5px;
+  border-color: var(--color-accent-1-300);
+  box-shadow: var(--shadow-md);
+}
+
+.left {
+  padding: 1.25rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.title {
+  margin: 0;
+
+  font-family: var(--f-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-wrap: balance;
+  color: var(--color-accent-heading);
+}
+
+.description {
+  color: var(--text-secundary);
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.cta {
+  align-self: start;
+
+  padding: 9px 16px;
+  border: 1px solid var(--color-bg-300);
+  border-radius: var(--btn-border-radius);
+  background-color: var(--color-bg-100);
+  color: var(--text-primary);
+
+  font-family: var(--f-action);
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.card:hover .cta {
+  border-color: var(--color-accent-highlight);
+  background-color: var(--color-accent-highlight);
+  color: var(--color-bg-50);
+}
+
+.right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-accent-1-50) 55%
+  );
+}
+
+.image {
+  width: 100%;
+  max-width: 9rem;
+  object-fit: contain;
+
+  transition:
+    translate var(--transition-fast),
+    rotate var(--transition-fast);
+}
+
+.card:hover .image {
+  translate: -8px 0;
+  rotate: -8deg;
+}
