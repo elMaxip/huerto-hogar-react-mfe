@@ -1,0 +1,22 @@
+/* Estilos comunes de las páginas simples del host */
+.page {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+}
+
+.title {
+  margin: 0 0 0.75rem;
+  font-family: var(--ff-serif);
+  color: var(--color-accent-heading);
+}
+
+.link {
+  color: var(--color-accent-highlight);
+}
+
+@media (max-width: 60rem) {
+  .page {
+    padding: 1.5rem;
+  }
+}
