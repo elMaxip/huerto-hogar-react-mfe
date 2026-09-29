@@ -1,0 +1,39 @@
+/* Estilos comunes de las páginas de inicio de sesión y registro */
+.page {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 24rem;
+  background-color: var(--color-bg-100);
+  border-radius: var(--border-radius-md);
+}
+
+.form {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.link {
+  text-decoration: none;
+  text-align: center;
+  color: var(--text-primary);
+  transition: color var(--transition-fast);
+}
+
+.link:hover {
+  color: var(--color-accent-highlight);
+}
