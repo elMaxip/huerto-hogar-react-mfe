@@ -16,8 +16,6 @@ export default function Navbar() {
   return (
     <nav className={styles.nav}>
       <div className={styles.group}>
-        {/* NavLink pone aria-current="page" en el enlace activo; /catalog sigue
-            activo en /catalog/frutas-frescas */}
         {LINKS.map((link) => (
           <NavLink
             key={link.to}

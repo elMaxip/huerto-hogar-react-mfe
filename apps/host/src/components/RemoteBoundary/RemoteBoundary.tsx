@@ -5,10 +5,6 @@ interface RemoteBoundaryProps {
   children: ReactNode;
 }
 
-/**
- * Si un remoto está caído, el import falla: este error boundary evita que
- * eso tumbe también al host. Los error boundaries todavía requieren clases.
- */
 export default class RemoteBoundary extends Component<
   RemoteBoundaryProps,
   { failed: boolean }
