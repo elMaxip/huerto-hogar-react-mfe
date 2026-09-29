@@ -1,0 +1,23 @@
+.trigger {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--ff-sans);
+  color: var(--text-primary);
+  font-size: 1rem;
+  padding: 0;
+}
+
+.panel {
+  top: 40px;
+  right: 40px;
+  min-width: 16rem;
+}
+
+.status {
+  margin: 0;
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid var(--color-bg-100);
+  border-radius: var(--border-radius-md);
+}
