@@ -1,0 +1,100 @@
+/* Tokens de diseño y estilos base compartidos por el host y todos los remotos */
+:root {
+  --color-bg-50: #f7f7f7;
+  --color-bg-100: #e0e0e0;
+  --color-bg-200: #c8c8c8;
+  --color-bg-300: #b1b1b1;
+  --color-bg-400: #9a9a9a;
+  --color-bg-500: #828282;
+  --color-bg-600: #6b6b6b;
+  --color-bg-700: #535353;
+  --color-bg-800: #3c3c3c;
+  --color-bg-900: #242424;
+  --color-bg-950: #0d0d0d;
+  --color-bg-main: #f7f7f7;
+
+  /* Para botones, enlaces y elementos interactivos */
+  --color-accent-1-50: #ecf9f1;
+  --color-accent-1-100: #c9edd9;
+  --color-accent-1-200: #a7e2c0;
+  --color-accent-1-300: #85d6a8;
+  --color-accent-1-400: #62cb8f;
+  --color-accent-1-500: #40bf77;
+  --color-accent-1-600: #349d62;
+  --color-accent-1-700: #2e8b57;
+  --color-accent-1-800: #1d5837;
+  --color-accent-1-900: #123621;
+  --color-accent-1-950: #06130c;
+  --color-accent-highlight: var(--color-accent-1-700);
+
+  /* Para ofertas especiales y promociones */
+  --color-accent-2-50: #fffbe6;
+  --color-accent-2-100: #fff4b8;
+  --color-accent-2-200: #ffed8a;
+  --color-accent-2-300: #ffe75c;
+  --color-accent-2-400: #ffe02e;
+  --color-accent-2-500: #ffd700;
+  --color-accent-2-600: #d1b200;
+  --color-accent-2-700: #a38b00;
+  --color-accent-2-800: #756400;
+  --color-accent-2-900: #473d00;
+  --color-accent-2-950: #1a1600;
+  --color-accent-warm: var(--color-accent-2-500);
+
+  /* Para títulos y subtitulos */
+  --color-accent-3-50: #fcf1e9;
+  --color-accent-3-100: #f6d7c0;
+  --color-accent-3-200: #f1bd98;
+  --color-accent-3-300: #eba36f;
+  --color-accent-3-400: #e68947;
+  --color-accent-3-500: #e06f1f;
+  --color-accent-3-600: #b85b19;
+  --color-accent-3-700: #8b4513;
+  --color-accent-3-800: #67330e;
+  --color-accent-3-900: #3f1f09;
+  --color-accent-3-950: #160b03;
+  --color-accent-heading: var(--color-accent-3-700);
+
+  /* Para texto general */
+  --ff-sans: "Montserrat", sans-serif;
+
+  /* Encabezados y titulos */
+  --ff-serif: "Playfair Display", serif;
+
+  --f-body: var(--ff-sans);
+  --f-action: var(--ff-sans);
+  --f-input: var(--ff-sans);
+  --f-heading: var(--ff-serif);
+
+  --text-primary: #333333;
+  --text-secundary: #666666;
+
+  /* Para mensajes de validación y acciones destructivas */
+  --color-error: #c0392b;
+  --color-error-bg: #fdecea;
+
+  --border-radius-sm: 0.2rem;
+  --border-radius-md: 0.5rem;
+
+  /* Elevación y movimiento de las tarjetas */
+  --shadow-sm: 0 1px 2px rgb(13 13 13 / 6%);
+  --shadow-md: 0 10px 24px rgb(13 13 13 / 14%);
+  --transition-fast: 0.2s ease;
+
+  --btn-border-radius: var(--border-radius-sm);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: var(--color-bg-main);
+
+  font-family: var(--f-body);
+  color: var(--text-primary);
+}

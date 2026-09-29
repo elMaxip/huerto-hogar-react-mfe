@@ -1,0 +1,30 @@
+.label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+}
+
+.input {
+  font-family: var(--f-input);
+  border-radius: var(--border-radius-sm);
+  padding: 10px 15px;
+  outline: none;
+  border: 1px solid var(--color-bg-200);
+}
+
+.input:focus-visible {
+  border-color: var(--color-accent-highlight);
+}
+
+.invalid,
+.invalid:focus-visible {
+  border-color: var(--color-error);
+}
+
+.error {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--color-error);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
