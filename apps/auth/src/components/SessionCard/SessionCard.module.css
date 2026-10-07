@@ -1,0 +1,37 @@
+.card {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-bg-100);
+  box-shadow: var(--shadow-md);
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fullname {
+  font-weight: 600;
+}
+
+.action {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px 10px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-bg-300);
+  background-color: var(--color-bg-100);
+  color: var(--text-primary);
+  cursor: pointer;
+
+  text-align: center;
+  text-decoration: none;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.action:hover {
+  border-color: var(--color-accent-highlight);
+  background-color: var(--color-accent-1-200);
+}
