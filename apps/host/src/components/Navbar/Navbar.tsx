@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import styles from "./Navbar.module.css";
+import SessionMenu from "../SessionMenu/SessionMenu";
 
 const LINKS = [
   { to: "/", label: "Inicio", end: true },
@@ -30,6 +31,7 @@ export default function Navbar() {
         <NavLink to="/cart" className={styles.link}>
           Carrito
         </NavLink>
+        <SessionMenu />
       </div>
     </nav>
   );

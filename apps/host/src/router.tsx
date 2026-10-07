@@ -28,6 +28,8 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      { path: "login", lazy: () => import("auth/login") },
+      { path: "register", lazy: () => import("auth/register") },
     ],
   },
 ]);
