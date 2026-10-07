@@ -19,7 +19,6 @@ export default defineConfig({
         "./catalog": "./src/routes/catalog.ts",
         "./product": "./src/routes/product.ts",
       },
-      bundleAllCSS: true,
     }),
   ],
   server: {

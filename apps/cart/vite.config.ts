@@ -17,7 +17,6 @@ export default defineConfig({
       exposes: {
         "./cart": "./src/routes/cart.ts",
       },
-      bundleAllCSS: true,
     }),
   ],
   server: {
