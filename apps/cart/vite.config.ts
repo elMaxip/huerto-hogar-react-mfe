@@ -13,7 +13,7 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     federation({
       ...CONFIG,
-      name: "products",
+      name: "cart",
       exposes: {
         "./cart": "./src/routes/cart.ts",
       },
