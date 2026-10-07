@@ -16,6 +16,13 @@ export const router = createBrowserRouter([
             ErrorBoundary: RouteError,
             children: [
               { index: true, lazy: () => import("shop/home") },
+              { path: "catalog", lazy: () => import("shop/catalog") },
+              { path: "catalog/:category", lazy: () => import("shop/catalog") },
+              {
+                path: "product/:productId",
+                lazy: () => import("shop/product"),
+              },
+              { path: "/cart", lazy: () => import("cart/cart") },
               { path: "*", Component: NotFound },
             ],
           },
