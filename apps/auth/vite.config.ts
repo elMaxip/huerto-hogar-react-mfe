@@ -14,11 +14,11 @@ export default defineConfig({
     federation({
       ...CONFIG,
       name: "auth",
-      /*  exposes: {
+      exposes: {
         "./login": "./src/routes/login.ts",
         "./register": "./src/routes/register.ts",
         "./SessionCard": "./src/components/SessionCard/SessionCard.tsx",
-      }, */
+      },
     }),
   ],
   server: {
