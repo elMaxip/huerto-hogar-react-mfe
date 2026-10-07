@@ -14,7 +14,10 @@ export const router = createBrowserRouter([
         children: [
           {
             ErrorBoundary: RouteError,
-            children: [{ path: "*", Component: NotFound }],
+            children: [
+              { index: true, lazy: () => import("shop/home") },
+              { path: "*", Component: NotFound },
+            ],
           },
         ],
       },
