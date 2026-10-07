@@ -1,0 +1,17 @@
+.row {
+  max-width: 100dvw;
+}
+
+.heading {
+  padding-inline: 1.5rem;
+}
+
+.cards {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+
+  padding-inline: 1.5rem;
+  /* Deja espacio para que la tarjeta suba al hacer hover sin cortarse */
+  padding-block: 8px 1rem;
+}
