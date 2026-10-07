@@ -84,6 +84,9 @@ importers:
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.12.0)
+      '@module-federation/vite':
+        specifier: ^1.23.2
+        version: 1.23.2(typescript@6.0.3)(vite@8.3.2(@types/node@24.19.1))
       '@rolldown/plugin-babel':
         specifier: ^0.2.3
         version: 0.2.4(@babel/core@7.29.7)(rolldown@1.2.12)(vite@8.3.2(@types/node@24.19.1))
@@ -196,12 +199,18 @@ importers:
 
   apps/shop:
     dependencies:
+      '@huerto/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       react:
         specifier: ^19.2.8
         version: 19.3.0
       react-dom:
         specifier: ^19.2.8
         version: 19.3.0(react@19.3.0)
+      react-router:
+        specifier: ^8.4.0
+        version: 8.4.0(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
     devDependencies:
       '@babel/core':
         specifier: ^7.29.7
