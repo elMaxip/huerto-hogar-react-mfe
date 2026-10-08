@@ -1,64 +1,65 @@
 import { useState, useTransition, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router";
-import { getUser, isValidEmail, login } from "@huerto/shared";
+import {
+  getUser,
+  isValidEmail,
+  login,
+  MIN_PASSWORD_LENGTH,
+} from "@huerto/shared";
 import { InputLabel, PrimaryButton } from "@huerto/shared/ui";
 import styles from "../auth.module.css";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type Field = "email" | "password";
 type Errors = Partial<Record<Field, string>>;
+
+const schema = z.object({
+  email: z.email("Correo electrónico no válido"),
+  password: z
+    .string()
+    .min(
+      MIN_PASSWORD_LENGTH,
+      `La contraseña debe tener mínimo ${MIN_PASSWORD_LENGTH} caracteres`,
+    ),
+});
+
+type FormData = z.infer<typeof schema>;
 
 export default function Login() {
   const navigate = useNavigate();
   const [isPending, startTransition] = useTransition();
 
-  const [values, setValues] = useState<Record<Field, string>>({
-    email: "",
-    password: "",
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
   });
-  const [errors, setErrors] = useState<Errors>({});
 
-  function update(field: Field, value: string) {
-    setValues((current) => ({ ...current, [field]: value }));
-    setErrors((current) => ({ ...current, [field]: undefined }));
-  }
-
-  function validate(email: string, password: string): Errors {
-    const found: Errors = {};
-
-    if (!email) {
-      found.email = "Ingresa tu correo electrónico";
-    } else if (!isValidEmail(email)) {
-      found.email = "Ingresa un correo electrónico válido";
-    }
-
-    if (!password) found.password = "Ingresa tu contraseña";
-
-    return found;
-  }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const email = values.email.trim();
-    const password = values.password;
-
-    const found = validate(email, password);
-    setErrors(found);
-
-    if (Object.keys(found).length > 0) return;
+  function onSubmit(data: FormData) {
+    const email = data.email.trim();
+    const password = data.password;
 
     startTransition(async () => {
       const user = await getUser(email);
 
       if (!user) {
-        setErrors({
-          email: "No existe una cuenta con este correo electrónico",
+        setError("email", {
+          type: "notFound",
+          message: "No existe una cuenta con este correo electrónico",
         });
         return;
       }
 
-      if (user.password !== password) {
-        setErrors({ password: "La contraseña es incorrecta" });
+      if (user.password != password) {
+        setError("password", {
+          type: "error",
+          message: "Las contraseñas no coinciden",
+        });
         return;
       }
 
@@ -72,25 +73,25 @@ export default function Login() {
       <title>Iniciar sesión</title>
 
       <div className={styles.card}>
-        <form className={styles.form} noValidate onSubmit={handleSubmit}>
+        <form
+          className={styles.form}
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className={styles.inputs}>
             <InputLabel
               label="Correo electrónico"
-              name="email"
               type="email"
               autoComplete="email"
-              value={values.email}
-              error={errors.email}
-              onChange={(event) => update("email", event.target.value)}
+              {...register("email")}
+              error={errors.email?.message}
             />
             <InputLabel
               label="Contraseña"
-              name="password"
               type="password"
               autoComplete="current-password"
-              value={values.password}
-              error={errors.password}
-              onChange={(event) => update("password", event.target.value)}
+              {...register("password")}
+              error={errors.password?.message}
             />
           </div>
 
