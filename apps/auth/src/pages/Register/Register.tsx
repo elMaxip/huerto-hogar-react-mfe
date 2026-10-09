@@ -49,6 +49,7 @@ export default function Register() {
       setError("confirmedPassword", {
         message: "Las contraseñas no coinciden"
       })
+      return
     }
 
     startTransition(async () => {
