@@ -87,7 +87,7 @@ export default function Register() {
               maxLength={80}
               autoComplete="name"
               {...register("fullname")}
-              error={errors.fullname.message}
+              error={errors.fullname?.message}
             />
             <InputLabel
               label="Correo electrónico"
@@ -95,7 +95,7 @@ export default function Register() {
               type="email"
               autoComplete="email"
               {...register("email")}
-              error={errors.email.message}
+              error={errors.email?.message}
             />
             <InputLabel
               label="Contraseña"
@@ -103,7 +103,7 @@ export default function Register() {
               type="password"
               autoComplete="new-password"
               {...register("password")}
-              error={errors.password.message}
+              error={errors.password?.message}
             />
             <InputLabel
               label="Confirma tu contraseña"
@@ -111,7 +111,7 @@ export default function Register() {
               type="password"
               autoComplete="new-password"
               {...register("confirmedPassword")}
-              error={errors.confirmedPassword.message}
+              error={errors.confirmedPassword?.message}
             />
           </div>
 

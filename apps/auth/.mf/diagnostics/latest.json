@@ -1,10 +1,10 @@
 {
   "latestErrorEvent": {
     "code": "TYPE-001",
-    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"\\\"C:\\\\\\\\Program Files\\\\\\\\nodejs\\\\\\\\node.exe\\\" C:\\\\Users\\\\VI-Alumno\\\\Desktop\\\\huerto-hogar-react-mfe\\\\node_modules\\\\.pnpm\\\\typescript@6.0.3\\\\node_modules\\\\typescript\\\\bin\\\\tsc --project C:\\\\Users\\\\VI-Alumno\\\\Desktop\\\\huerto-hogar-react-mfe\\\\apps\\\\auth\\\\node_modules\\\\.federation\\\\tsconfig.4762cd9bd5cab411b4c1c14f3a8689b9.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
+    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"\\\"C:\\\\\\\\Program Files\\\\\\\\nodejs\\\\\\\\node.exe\\\" C:\\\\Users\\\\VI-Alumno\\\\Desktop\\\\huerto-hogar-react-mfe\\\\node_modules\\\\.pnpm\\\\typescript@6.0.3\\\\node_modules\\\\typescript\\\\bin\\\\tsc --project C:\\\\Users\\\\VI-Alumno\\\\Desktop\\\\huerto-hogar-react-mfe\\\\apps\\\\auth\\\\node_modules\\\\.federation\\\\tsconfig.5c58d17433e97bcd75f569d4b12a3cea.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
     "args": {
-      "cmd": "\"C:\\\\Program Files\\\\nodejs\\\\node.exe\" C:\\Users\\VI-Alumno\\Desktop\\huerto-hogar-react-mfe\\node_modules\\.pnpm\\typescript@6.0.3\\node_modules\\typescript\\bin\\tsc --project C:\\Users\\VI-Alumno\\Desktop\\huerto-hogar-react-mfe\\apps\\auth\\node_modules\\.federation\\tsconfig.4762cd9bd5cab411b4c1c14f3a8689b9.json"
+      "cmd": "\"C:\\\\Program Files\\\\nodejs\\\\node.exe\" C:\\Users\\VI-Alumno\\Desktop\\huerto-hogar-react-mfe\\node_modules\\.pnpm\\typescript@6.0.3\\node_modules\\typescript\\bin\\tsc --project C:\\Users\\VI-Alumno\\Desktop\\huerto-hogar-react-mfe\\apps\\auth\\node_modules\\.federation\\tsconfig.5c58d17433e97bcd75f569d4b12a3cea.json"
     },
-    "timestamp": 1791577018561
+    "timestamp": 1791577637601
   }
 }
