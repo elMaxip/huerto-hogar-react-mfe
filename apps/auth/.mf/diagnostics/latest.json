@@ -1,10 +1,10 @@
 {
   "latestErrorEvent": {
     "code": "TYPE-001",
-    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"\\\"C:\\\\\\\\Program Files\\\\\\\\nodejs\\\\\\\\node.exe\\\" C:\\\\Users\\\\maxim\\\\Desktop\\\\Informatica\\\\Proyectos\\\\React\\\\fullstack-ev-2\\\\node_modules\\\\.pnpm\\\\typescript@6.0.3\\\\node_modules\\\\typescript\\\\bin\\\\tsc --project C:\\\\Users\\\\maxim\\\\Desktop\\\\Informatica\\\\Proyectos\\\\React\\\\fullstack-ev-2\\\\apps\\\\auth\\\\node_modules\\\\.federation\\\\tsconfig.747b74f3978dd9bd161db5d5230bb90e.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
+    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"\\\"C:\\\\\\\\Program Files\\\\\\\\nodejs\\\\\\\\node.exe\\\" C:\\\\Users\\\\VI-Alumno\\\\Desktop\\\\huerto-hogar-react-mfe\\\\node_modules\\\\.pnpm\\\\typescript@6.0.3\\\\node_modules\\\\typescript\\\\bin\\\\tsc --project C:\\\\Users\\\\VI-Alumno\\\\Desktop\\\\huerto-hogar-react-mfe\\\\apps\\\\auth\\\\node_modules\\\\.federation\\\\tsconfig.4762cd9bd5cab411b4c1c14f3a8689b9.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
     "args": {
-      "cmd": "\"C:\\\\Program Files\\\\nodejs\\\\node.exe\" C:\\Users\\maxim\\Desktop\\Informatica\\Proyectos\\React\\fullstack-ev-2\\node_modules\\.pnpm\\typescript@6.0.3\\node_modules\\typescript\\bin\\tsc --project C:\\Users\\maxim\\Desktop\\Informatica\\Proyectos\\React\\fullstack-ev-2\\apps\\auth\\node_modules\\.federation\\tsconfig.747b74f3978dd9bd161db5d5230bb90e.json"
+      "cmd": "\"C:\\\\Program Files\\\\nodejs\\\\node.exe\" C:\\Users\\VI-Alumno\\Desktop\\huerto-hogar-react-mfe\\node_modules\\.pnpm\\typescript@6.0.3\\node_modules\\typescript\\bin\\tsc --project C:\\Users\\VI-Alumno\\Desktop\\huerto-hogar-react-mfe\\apps\\auth\\node_modules\\.federation\\tsconfig.4762cd9bd5cab411b4c1c14f3a8689b9.json"
     },
-    "timestamp": 1791430967694
+    "timestamp": 1791577018561
   }
 }

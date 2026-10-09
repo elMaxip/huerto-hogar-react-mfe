@@ -1,101 +1,72 @@
-import { useState, useTransition, type FormEvent } from "react";
+import { useTransition } from "react";
 import { Link, useNavigate } from "react-router";
 import {
   getUser,
-  isValidEmail,
   MIN_FULLNAME_LENGTH,
   MIN_PASSWORD_LENGTH,
-  register,
+  register as registerUser,
 } from "@huerto/shared";
 import { InputLabel, PrimaryButton } from "@huerto/shared/ui";
 import styles from "../auth.module.css";
+import * as z from "zod"
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type Field = "fullname" | "email" | "password" | "confirmedPassword";
-type Values = Record<Field, string>;
-type Errors = Partial<Record<Field, string>>;
+const schema = z.object({
+  fullname: z.string().min(MIN_FULLNAME_LENGTH, `El nombre completo debe tener al menos ${MIN_FULLNAME_LENGTH} caracteres`),
+  email: z.email("El correo es inválido"),
+  password: z
+    .string()
+    .min(
+      MIN_PASSWORD_LENGTH,
+      `La contraseña debe tener mínimo ${MIN_PASSWORD_LENGTH} caracteres`,
+    ),
+  confirmedPassword: z
+    .string()
+    .min(
+      MIN_PASSWORD_LENGTH,
+      `La contraseña debe tener mínimo ${MIN_PASSWORD_LENGTH} caracteres`,
+    ),
+})
 
-function validate({
-  fullname,
-  email,
-  password,
-  confirmedPassword,
-}: Values): Errors {
-  const found: Errors = {};
-
-  if (!fullname) {
-    found.fullname = "Ingresa tu nombre completo";
-  } else if (fullname.length < MIN_FULLNAME_LENGTH) {
-    found.fullname = `El nombre debe tener al menos ${MIN_FULLNAME_LENGTH} caracteres`;
-  }
-
-  if (!email) {
-    found.email = "Ingresa tu correo electrónico";
-  } else if (!isValidEmail(email)) {
-    found.email = "Ingresa un correo electrónico válido";
-  }
-
-  if (!password) {
-    found.password = "Ingresa una contraseña";
-  } else if (password.length < MIN_PASSWORD_LENGTH) {
-    found.password = `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres`;
-  }
-
-  if (!confirmedPassword) {
-    found.confirmedPassword = "Repite tu contraseña";
-  } else if (password !== confirmedPassword) {
-    found.confirmedPassword = "Las contraseñas no coinciden";
-  }
-
-  return found;
-}
+type FormData = z.infer<typeof schema>
 
 export default function Register() {
   const navigate = useNavigate();
   const [isPending, startTransition] = useTransition();
 
-  const [values, setValues] = useState<Values>({
-    fullname: "",
-    email: "",
-    password: "",
-    confirmedPassword: "",
-  });
-  const [errors, setErrors] = useState<Errors>({});
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors }
+  } = useForm<FormData>({
+    resolver: zodResolver(schema)
+  })
 
-  function update(field: Field, value: string) {
-    setValues((current) => ({ ...current, [field]: value }));
-    setErrors((current) => ({ ...current, [field]: undefined }));
-  }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const cleaned: Values = {
-      ...values,
-      fullname: values.fullname.trim(),
-      email: values.email.trim(),
-    };
-
-    const found = validate(cleaned);
-    setErrors(found);
-
-    if (Object.keys(found).length > 0) return;
+  function onSubmit(data: FormData) {
+    if (data.password != data.confirmedPassword) {
+      setError("confirmedPassword", {
+        message: "Las contraseñas no coinciden"
+      })
+    }
 
     startTransition(async () => {
-      if (await getUser(cleaned.email)) {
-        setErrors({
-          email: "Ya existe una cuenta con este correo electrónico",
+      if (await getUser(data.email)) {
+        setError("email", {
+          message: "Ya existe una cuenta con este correo electrónico",
         });
         return;
       }
 
       try {
-        await register({
-          fullname: cleaned.fullname,
-          email: cleaned.email,
-          password: cleaned.password,
+        await registerUser({
+          fullname: data.fullname,
+          email: data.email,
+          password: data.password,
         });
       } catch {
-        setErrors({ email: "No se pudo crear la cuenta, intenta nuevamente" });
+        setError("email", { message: "No se pudo crear la cuenta, intenta nuevamente" });
         return;
       }
 
@@ -108,45 +79,39 @@ export default function Register() {
       <title>Registrar cuenta</title>
 
       <div className={styles.card}>
-        <form className={styles.form} noValidate onSubmit={handleSubmit}>
+        <form className={styles.form} noValidate onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.inputs}>
             <InputLabel
               label="Nombre completo"
               name="fullname"
               maxLength={80}
               autoComplete="name"
-              value={values.fullname}
-              error={errors.fullname}
-              onChange={(event) => update("fullname", event.target.value)}
+              {...register("fullname")}
+              error={errors.fullname.message}
             />
             <InputLabel
               label="Correo electrónico"
               name="email"
               type="email"
               autoComplete="email"
-              value={values.email}
-              error={errors.email}
-              onChange={(event) => update("email", event.target.value)}
+              {...register("email")}
+              error={errors.email.message}
             />
             <InputLabel
               label="Contraseña"
               name="password"
               type="password"
               autoComplete="new-password"
-              value={values.password}
-              error={errors.password}
-              onChange={(event) => update("password", event.target.value)}
+              {...register("password")}
+              error={errors.password.message}
             />
             <InputLabel
               label="Confirma tu contraseña"
               name="confirmed-password"
               type="password"
               autoComplete="new-password"
-              value={values.confirmedPassword}
-              error={errors.confirmedPassword}
-              onChange={(event) =>
-                update("confirmedPassword", event.target.value)
-              }
+              {...register("confirmedPassword")}
+              error={errors.confirmedPassword.message}
             />
           </div>
 

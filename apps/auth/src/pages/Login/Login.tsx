@@ -1,8 +1,7 @@
-import { useState, useTransition, type FormEvent } from "react";
+import { useTransition } from "react";
 import { Link, useNavigate } from "react-router";
 import {
   getUser,
-  isValidEmail,
   login,
   MIN_PASSWORD_LENGTH,
 } from "@huerto/shared";
@@ -11,9 +10,6 @@ import styles from "../auth.module.css";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-type Field = "email" | "password";
-type Errors = Partial<Record<Field, string>>;
 
 const schema = z.object({
   email: z.email("Correo electrónico no válido"),
