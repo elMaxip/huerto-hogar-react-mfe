@@ -18,7 +18,6 @@ import {
 } from "./schema";
 import styles from "./ProductForm.module.css";
 
-/** Las imágenes se guardan como data URL en IndexedDB */
 const MAX_IMAGE_SIZE = 1024 * 1024;
 
 export default function ProductForm() {
@@ -95,7 +94,11 @@ export default function ProductForm() {
         </p>
       )}
 
-      <form className={styles.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={styles.form}
+        noValidate
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className={styles.fields}>
           <InputLabel
             label="Nombre"

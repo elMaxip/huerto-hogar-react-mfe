@@ -6,7 +6,6 @@ export default function AdminLayout() {
   const session = useSession();
   const { pathname } = useLocation();
 
-  // El loader ya validó el acceso; esto cubre cerrar sesión con el panel abierto
   if (!session) {
     return (
       <Navigate

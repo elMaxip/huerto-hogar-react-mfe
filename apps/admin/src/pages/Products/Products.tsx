@@ -13,7 +13,6 @@ export default function Products() {
   const [toDelete, setToDelete] = useState<Product | null>(null);
 
   const query = search.trim().toLowerCase();
-  // Se oculta el producto mientras se elimina para no esperar al loader
   const deletingId =
     fetcher.state !== "idle" ? fetcher.formData?.get("productId") : null;
 

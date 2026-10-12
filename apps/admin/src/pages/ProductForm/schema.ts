@@ -3,7 +3,6 @@ import { Category } from "@huerto/shared";
 
 export const MAX_DISCOUNT = 90;
 
-/** Campos que se editan en el formulario */
 export const productFormSchema = z.object({
   name: z
     .string()
