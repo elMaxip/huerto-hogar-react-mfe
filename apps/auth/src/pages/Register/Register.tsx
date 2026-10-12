@@ -8,12 +8,17 @@ import {
 } from "@huerto/shared";
 import { InputLabel, PrimaryButton } from "@huerto/shared/ui";
 import styles from "../auth.module.css";
-import * as z from "zod"
+import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
-  fullname: z.string().min(MIN_FULLNAME_LENGTH, `El nombre completo debe tener al menos ${MIN_FULLNAME_LENGTH} caracteres`),
+  fullname: z
+    .string()
+    .min(
+      MIN_FULLNAME_LENGTH,
+      `El nombre completo debe tener al menos ${MIN_FULLNAME_LENGTH} caracteres`,
+    ),
   email: z.email("El correo es inválido"),
   password: z
     .string()
@@ -27,9 +32,9 @@ const schema = z.object({
       MIN_PASSWORD_LENGTH,
       `La contraseña debe tener mínimo ${MIN_PASSWORD_LENGTH} caracteres`,
     ),
-})
+});
 
-type FormData = z.infer<typeof schema>
+type FormData = z.infer<typeof schema>;
 
 export default function Register() {
   const navigate = useNavigate();
@@ -39,17 +44,17 @@ export default function Register() {
     register,
     handleSubmit,
     setError,
-    formState: { errors }
+    formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(schema)
-  })
+    resolver: zodResolver(schema),
+  });
 
   function onSubmit(data: FormData) {
     if (data.password != data.confirmedPassword) {
       setError("confirmedPassword", {
-        message: "Las contraseñas no coinciden"
-      })
-      return
+        message: "Las contraseñas no coinciden",
+      });
+      return;
     }
 
     startTransition(async () => {
@@ -67,7 +72,9 @@ export default function Register() {
           password: data.password,
         });
       } catch {
-        setError("email", { message: "No se pudo crear la cuenta, intenta nuevamente" });
+        setError("email", {
+          message: "No se pudo crear la cuenta, intenta nuevamente",
+        });
         return;
       }
 
@@ -80,11 +87,14 @@ export default function Register() {
       <title>Registrar cuenta</title>
 
       <div className={styles.card}>
-        <form className={styles.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className={styles.form}
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className={styles.inputs}>
             <InputLabel
               label="Nombre completo"
-              name="fullname"
               maxLength={80}
               autoComplete="name"
               {...register("fullname")}
@@ -92,7 +102,6 @@ export default function Register() {
             />
             <InputLabel
               label="Correo electrónico"
-              name="email"
               type="email"
               autoComplete="email"
               {...register("email")}
@@ -100,7 +109,6 @@ export default function Register() {
             />
             <InputLabel
               label="Contraseña"
-              name="password"
               type="password"
               autoComplete="new-password"
               {...register("password")}
@@ -108,7 +116,6 @@ export default function Register() {
             />
             <InputLabel
               label="Confirma tu contraseña"
-              name="confirmed-password"
               type="password"
               autoComplete="new-password"
               {...register("confirmedPassword")}
