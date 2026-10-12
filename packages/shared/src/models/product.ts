@@ -9,6 +9,14 @@ export type Category = (typeof Category)[keyof typeof Category];
 
 export const CATEGORIES: Category[] = Object.values(Category);
 
+/** Prefijo de los códigos de producto de cada categoría (FR001, VR002…) */
+const CATEGORY_PREFIX: Record<Category, string> = {
+  [Category.FrutaFresca]: "FR",
+  [Category.VerduraOrganica]: "VR",
+  [Category.ProductoOrganico]: "PO",
+  [Category.ProductoLacteo]: "PL",
+};
+
 export interface Product {
   id: string;
   name: string;
@@ -51,4 +59,19 @@ export function findCategory(value: string): Category | undefined {
   const slug = slugify(value);
 
   return CATEGORIES.find((category) => slugify(category) === slug);
+}
+
+export function nextProductId(
+  category: Category,
+  products: Pick<Product, "id">[],
+): string {
+  const prefix = CATEGORY_PREFIX[category];
+
+  const last = products
+    .filter(({ id }) => id.startsWith(prefix))
+    .map(({ id }) => Number(id.slice(prefix.length)))
+    .filter(Number.isInteger)
+    .reduce((max, n) => Math.max(max, n), 0);
+
+  return prefix + String(last + 1).padStart(3, "0");
 }

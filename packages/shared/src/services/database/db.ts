@@ -1,7 +1,8 @@
-import { INITIAL_PRODUCTS } from "./seed";
+import type { User } from "../../models/user";
+import { DEFAULT_ADMIN, INITIAL_PRODUCTS } from "./seed";
 
 const DB_NAME = "huertohogar-react";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 let connection: Promise<IDBDatabase> | null = null;
 
@@ -9,7 +10,7 @@ export function openDatabase(): Promise<IDBDatabase> {
   connection ??= new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
 
-    req.onupgradeneeded = () => {
+    req.onupgradeneeded = (event) => {
       const db = req.result;
 
       if (!db.objectStoreNames.contains("users")) {
@@ -32,6 +33,10 @@ export function openDatabase(): Promise<IDBDatabase> {
           objectStore.add(product);
         }
       }
+
+      if (event.oldVersion < 2) {
+        seedAdmin(req.transaction!.objectStore("users"));
+      }
     };
 
     req.onsuccess = () => resolve(req.result);
@@ -42,6 +47,21 @@ export function openDatabase(): Promise<IDBDatabase> {
   });
 
   return connection;
+}
+
+/**
+ * Crea la cuenta de administrador por defecto. Si alguien ya se registró con
+ * ese correo, la cuenta se sobrescribe para que no quede con el rol de admin
+ * y una contraseña elegida por otra persona.
+ */
+function seedAdmin(users: IDBObjectStore) {
+  const existing = users.index("email_idx").get(DEFAULT_ADMIN.email);
+
+  existing.onsuccess = () => {
+    const user = existing.result as User | undefined;
+
+    users.put(user ? { ...DEFAULT_ADMIN, id: user.id } : DEFAULT_ADMIN);
+  };
 }
 
 export function request<T>(req: IDBRequest<T>): Promise<T> {

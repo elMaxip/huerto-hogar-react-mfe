@@ -5,6 +5,7 @@ import {
   MIN_FULLNAME_LENGTH,
   MIN_PASSWORD_LENGTH,
   register as registerUser,
+  Role,
 } from "@huerto/shared";
 import { InputLabel, PrimaryButton } from "@huerto/shared/ui";
 import styles from "../auth.module.css";
@@ -70,6 +71,7 @@ export default function Register() {
           fullname: data.fullname,
           email: data.email,
           password: data.password,
+          role: Role.Client,
         });
       } catch {
         setError("email", {

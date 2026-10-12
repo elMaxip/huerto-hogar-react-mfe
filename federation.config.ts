@@ -4,6 +4,7 @@ export const REMOTES = {
   shop: 5174,
   auth: 5175,
   cart: 5176,
+  admin: 5177,
 } as const;
 
 export type RemoteName = keyof typeof REMOTES;

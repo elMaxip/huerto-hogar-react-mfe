@@ -1,5 +1,5 @@
 import { useTransition } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import {
   getUser,
   login,
@@ -23,8 +23,14 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+/** Solo se aceptan rutas internas para no redirigir a otro sitio */
+function safeRedirect(path: string | null): string {
+  return path?.startsWith("/") && !path.startsWith("//") ? path : "/";
+}
+
 export default function Login() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
   const {
@@ -60,7 +66,7 @@ export default function Login() {
       }
 
       login(user);
-      await navigate("/");
+      await navigate(safeRedirect(searchParams.get("redirectTo")));
     });
   }
 

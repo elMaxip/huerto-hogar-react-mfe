@@ -1,4 +1,4 @@
-import type { SessionUser, User } from "../models/user";
+import { normalizeRole, type SessionUser, type User } from "../models/user";
 import { createStorageChannel } from "./storage";
 
 /** Se dispara en window al iniciar o cerrar sesión */
@@ -16,10 +16,19 @@ export function parseSession(saved: string | null): SessionUser | null {
       return null;
     }
 
-    return { id: parsed.id, fullname: parsed.fullname, email: parsed.email };
+    return {
+      id: parsed.id,
+      fullname: parsed.fullname,
+      email: parsed.email,
+      role: normalizeRole(parsed.role),
+    };
   } catch {
     return null;
   }
+}
+
+export function getSession(): SessionUser | null {
+  return parseSession(sessionChannel.read());
 }
 
 export function login(user: User) {
@@ -27,6 +36,7 @@ export function login(user: User) {
     id: user.id,
     fullname: user.fullname,
     email: user.email,
+    role: normalizeRole(user.role),
   };
 
   sessionChannel.write(JSON.stringify(session));

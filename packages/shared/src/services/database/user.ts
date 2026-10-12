@@ -1,9 +1,18 @@
-import type { NewUser, User } from "../../models/user";
+import { normalizeRole, type NewUser, type User } from "../../models/user";
 import { openDatabase, request } from "./db";
 
-export async function register(user: NewUser): Promise<User> {
+async function userStore(mode: IDBTransactionMode = "readonly") {
   const db = await openDatabase();
-  const store = db.transaction("users", "readwrite").objectStore("users");
+
+  return db.transaction("users", mode).objectStore("users");
+}
+
+function withRole(user: User | undefined): User | undefined {
+  return user && { ...user, role: normalizeRole(user.role) };
+}
+
+export async function register(user: NewUser): Promise<User> {
+  const store = await userStore("readwrite");
 
   const id = (await request(store.add(user))) as number;
 
@@ -11,8 +20,13 @@ export async function register(user: NewUser): Promise<User> {
 }
 
 export async function getUser(email: string): Promise<User | undefined> {
-  const db = await openDatabase();
-  const store = db.transaction("users", "readonly").objectStore("users");
+  const store = await userStore();
 
-  return request<User | undefined>(store.index("email_idx").get(email));
+  return withRole(await request<User | undefined>(store.index("email_idx").get(email)));
+}
+
+export async function getUserById(id: number): Promise<User | undefined> {
+  const store = await userStore();
+
+  return withRole(await request<User | undefined>(store.get(id)));
 }

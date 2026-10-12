@@ -9,6 +9,22 @@ export default function RouteError() {
     return <NotFound />;
   }
 
+  if (isRouteErrorResponse(error) && error.status === 403) {
+    return (
+      <section className={styles.page}>
+        <title>Acceso denegado</title>
+        <h1 className={styles.title}>Acceso denegado</h1>
+        <p>
+          Esta sección es solo para administradores. Inicia sesión con una
+          cuenta de administrador para continuar.
+        </p>
+        <Link to="/" className={styles.link}>
+          Volver al inicio
+        </Link>
+      </section>
+    );
+  }
+
   console.error(error);
 
   return (

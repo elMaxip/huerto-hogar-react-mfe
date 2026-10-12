@@ -1,0 +1,113 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.search {
+  flex: 1;
+  max-width: 24rem;
+  font-family: var(--f-input);
+  padding: 10px 15px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-bg-200);
+  outline: none;
+}
+
+.search:focus-visible {
+  border-color: var(--color-accent-highlight);
+}
+
+.count {
+  font-size: 0.9rem;
+  color: var(--text-secundary);
+}
+
+.empty a {
+  color: var(--color-accent-highlight);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-bg-100);
+  border-radius: var(--border-radius-md);
+  background-color: white;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table th {
+  text-align: left;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secundary);
+  background-color: var(--color-bg-50);
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-bg-100);
+  white-space: nowrap;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.dialog {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(26rem, calc(100% - 2rem));
+  padding: 1.5rem;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-bg-100);
+  background-color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.dialogTitle {
+  margin: 0;
+  font-family: var(--ff-serif);
+  color: var(--color-accent-heading);
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: end;
+  gap: 0.75rem;
+}
+
+.danger {
+  font-family: var(--f-action);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px 14px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--color-error);
+  background-color: var(--color-error);
+  color: white;
+  cursor: pointer;
+}
+
+.danger:hover {
+  background-color: #a93226;
+}

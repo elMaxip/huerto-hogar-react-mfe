@@ -23,6 +23,21 @@ export const router = createBrowserRouter([
                 lazy: () => import("shop/product"),
               },
               { path: "/cart", lazy: () => import("cart/cart") },
+              {
+                path: "admin",
+                lazy: () => import("admin/layout"),
+                children: [
+                  { index: true, lazy: () => import("admin/products") },
+                  {
+                    path: "products/new",
+                    lazy: () => import("admin/productForm"),
+                  },
+                  {
+                    path: "products/:productId",
+                    lazy: () => import("admin/productForm"),
+                  },
+                ],
+              },
               { path: "*", Component: NotFound },
             ],
           },

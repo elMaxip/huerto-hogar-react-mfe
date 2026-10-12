@@ -1,0 +1,58 @@
+.image {
+  display: block;
+  width: 3.5rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--border-radius-sm);
+}
+
+.code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.9rem;
+}
+
+.name {
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.name:hover {
+  color: var(--color-accent-highlight);
+}
+
+.oldPrice {
+  color: var(--text-secundary);
+  text-decoration: line-through;
+  font-size: 0.85rem;
+}
+
+.outOfStock {
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+}
+
+.edit,
+.remove {
+  font-family: var(--ff-sans);
+  font-size: 0.9rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.edit {
+  color: var(--color-accent-highlight);
+}
+
+.remove {
+  color: var(--color-error);
+}

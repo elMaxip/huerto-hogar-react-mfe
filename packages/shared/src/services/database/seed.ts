@@ -1,4 +1,13 @@
 import { Category, type Product } from "../../models/product";
+import { Role, type NewUser } from "../../models/user";
+
+/** Cuenta creada al iniciar la base de datos por primera vez */
+export const DEFAULT_ADMIN: NewUser = {
+  fullname: "Administrador",
+  email: "admin@huertohogar.cl",
+  password: "admin1234",
+  role: Role.Admin,
+};
 
 export const INITIAL_PRODUCTS: Product[] = [
   {
@@ -82,4 +91,3 @@ export const INITIAL_PRODUCTS: Product[] = [
       "Miel pura y orgánica producida por apicultores locales. Rica en antioxidantes y con un sabor inigualable, perfecta para endulzar de manera natural tus comidas y bebidas.",
   },
 ];
-

@@ -1,4 +1,5 @@
 import { NavLink } from "react-router";
+import { isAdmin, useSession } from "@huerto/shared";
 import styles from "./Navbar.module.css";
 import SessionMenu from "../SessionMenu/SessionMenu";
 
@@ -10,6 +11,8 @@ const LINKS = [
 ];
 
 export default function Navbar() {
+  const session = useSession();
+
   return (
     <nav className={styles.nav}>
       <div className={styles.group}>
@@ -28,6 +31,11 @@ export default function Navbar() {
       <h1 className={styles.brand}>HuertoHogar</h1>
 
       <div className={styles.group}>
+        {isAdmin(session) && (
+          <NavLink to="/admin" className={styles.link}>
+            Administración
+          </NavLink>
+        )}
         <NavLink to="/cart" className={styles.link}>
           Carrito
         </NavLink>

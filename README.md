@@ -6,22 +6,22 @@ Proyecto para la **segunda evaluación** de la asignatura **Fullstack 2**. Es la
 
 HuertoHogar vende frutas, verduras y productos orgánicos/lácteos de productores locales y necesita una tienda web donde los clientes puedan explorar el catálogo, ver el detalle de los productos, crear una cuenta, iniciar sesión y armar un carrito.
 
-Además del caso de negocio, el proyecto busca resolver un problema de arquitectura: **separar la aplicación en partes independientes** (tienda, autenticación y carrito) que se desarrollan, compilan y despliegan por separado, pero que el usuario ve como una sola página.
+Además del caso de negocio, el proyecto busca resolver un problema de arquitectura: **separar la aplicación en partes independientes** (tienda, autenticación, carrito y administración) que se desarrollan, compilan y despliegan por separado, pero que el usuario ve como una sola página.
 
 ## Cómo lo hace
 
-La aplicación es un **monorepo con pnpm workspaces** que contiene cuatro aplicaciones Vite + React y un paquete compartido:
+La aplicación es un **monorepo con pnpm workspaces** que contiene cinco aplicaciones Vite + React y un paquete compartido:
 
 ```
-              ┌────────────────────────── host :5173 ──────────────────────────┐
-              │  Router, layout (navbar, footer), errores y 404                │
-              └───────┬────────────────────┬────────────────────┬──────────────┘
-                      │ remoteEntry.js     │ remoteEntry.js     │ remoteEntry.js
-              ┌───────▼───────┐    ┌───────▼───────┐    ┌───────▼───────┐
-              │  shop  :5174  │    │  auth  :5175  │    │  cart  :5176  │
-              │ home, catálogo│    │ login,registro│    │    carrito    │
-              │  y producto   │    │ y SessionCard │    │               │
-              └───────────────┘    └───────────────┘    └───────────────┘
+       ┌──────────────────────────────── host :5173 ────────────────────────────────┐
+       │  Router, layout (navbar, footer), errores, 403 y 404                        │
+       └──────┬──────────────────┬──────────────────┬──────────────────┬────────────┘
+              │ remoteEntry.js   │ remoteEntry.js   │ remoteEntry.js   │ remoteEntry.js
+      ┌───────▼───────┐  ┌───────▼───────┐  ┌───────▼───────┐  ┌───────▼───────┐
+      │  shop  :5174  │  │  auth  :5175  │  │  cart  :5176  │  │ admin  :5177  │
+      │ home, catálogo│  │ login,registro│  │    carrito    │  │   CRUD de     │
+      │  y producto   │  │ y SessionCard │  │               │  │   productos   │
+      └───────────────┘  └───────────────┘  └───────────────┘  └───────────────┘
                          todos usan  packages/shared  (@huerto/shared)
 ```
 
@@ -29,9 +29,10 @@ La aplicación es un **monorepo con pnpm workspaces** que contiene cuatro aplica
 - **`apps/shop`**: expone `home`, `catalog` y `product`.
 - **`apps/auth`**: expone `login`, `register` y el componente `SessionCard` que se muestra en el menú de cuenta.
 - **`apps/cart`**: expone la página `cart`.
+- **`apps/admin`**: panel de administración. Expone `layout` (protege la sección y muestra la navegación del panel), `products` (listado, búsqueda y eliminación) y `productForm` (crear y editar). Solo pueden entrar usuarios con rol de administrador.
 - **`packages/shared`** (`@huerto/shared`): modelos, servicios (IndexedDB, carrito, sesión, validadores), hooks, componentes de UI (`InputLabel`, `Modal`, `PrimaryButton`), imágenes de productos y estilos globales.
 
-Cada remoto expone un **módulo de ruta** (`src/routes/*.ts`) que exporta `Component` y `loader`, el formato que espera `lazy` de React Router. Así los datos se cargan **antes** de renderizar la página.
+Cada remoto expone un **módulo de ruta** (`src/routes/*.ts`) que exporta `Component`, `loader` y, cuando la página modifica datos, `action`, el formato que espera `lazy` de React Router. Así los datos se cargan **antes** de renderizar la página.
 
 Como no hay backend, los datos se guardan en el navegador: **IndexedDB** para productos y usuarios, y **localStorage** para el carrito y la sesión.
 
@@ -71,6 +72,7 @@ Después abre **http://localhost:5173** (el host). Los puertos están definidos 
 | shop | 5174 |
 | auth | 5175 |
 | cart | 5176 |
+| admin | 5177 |
 
 Los puertos usan `strictPort`, así que tienen que estar libres. También se puede correr una sola app con `pnpm --filter <app> dev` (por ejemplo `pnpm --filter shop dev`); el host necesita que los remotos estén levantados para mostrar sus páginas.
 
@@ -79,10 +81,20 @@ Los puertos usan `strictPort`, así que tienen que estar libres. También se pue
 Las URLs de los remotos se pueden cambiar con variables de entorno al compilar el host, sin tocar el código:
 
 ```bash
-SHOP_URL=https://shop.ejemplo.com AUTH_URL=https://auth.ejemplo.com CART_URL=https://cart.ejemplo.com pnpm --filter host build
+SHOP_URL=https://shop.ejemplo.com AUTH_URL=https://auth.ejemplo.com CART_URL=https://cart.ejemplo.com ADMIN_URL=https://admin.ejemplo.com pnpm --filter host build
 ```
 
 Si no se definen, se usa `http://localhost:<puerto>`.
+
+### Cuenta de administrador
+
+Al crear la base de datos se agrega una cuenta con rol de administrador:
+
+| Correo | Contraseña |
+| --- | --- |
+| `admin@huertohogar.cl` | `admin1234` |
+
+Con esa cuenta aparece el enlace **Administración** en la navbar y en el menú de cuenta, que lleva a **http://localhost:5173/admin**. Las cuentas creadas desde el registro tienen el rol de cliente.
 
 ## Funcionalidades
 
@@ -91,6 +103,12 @@ Si no se definen, se usa `http://localhost:<puerto>`.
 - **Detalle de producto**: precio con descuento, stock, unidad de venta y selector de cantidad.
 - **Carrito**: modificar cantidades, eliminar productos, vaciar el carrito, total con descuentos y compra simulada.
 - **Registro e inicio de sesión** con validaciones (email válido, nombre de al menos 3 caracteres, contraseña de al menos 8, confirmación y email no repetido).
+- **Panel de administración** (`/admin`), solo para administradores:
+  - Listado de productos con imagen, precio con descuento y stock, y búsqueda por código, nombre o categoría.
+  - Crear productos: el código se genera según la categoría (`FR004`, `PL001`…).
+  - Editar cualquier dato del producto, incluida la imagen (se sube un archivo de hasta 1 MB).
+  - Eliminar productos con un modal de confirmación.
+  - Sin sesión se redirige al login y, al ingresar, se vuelve al panel. Con una cuenta de cliente se muestra "Acceso denegado".
 - **Menú de cuenta** en un modal: muestra el usuario conectado o los enlaces para iniciar sesión / registrarse.
 - **Estado sincronizado entre pestañas**: si se cierra sesión o cambia el carrito en una pestaña, las demás se actualizan.
 - **Barra de progreso** mientras se cargan los datos de una ruta.
@@ -106,11 +124,12 @@ Si no se definen, se usa `http://localhost:<puerto>`.
 │   ├── host/                Contenedor: router, layout, navbar, errores
 │   ├── shop/                Home, catálogo y producto
 │   ├── auth/                Login, registro y SessionCard
-│   └── cart/                Carrito
+│   ├── cart/                Carrito
+│   └── admin/               Panel de administración (CRUD de productos)
 └── packages/
     └── shared/              @huerto/shared
         └── src/
-            ├── models/      Product, User, categorías y formato de precio
+            ├── models/      Product, User, roles, categorías y formato de precio
             ├── services/    IndexedDB, carrito, sesión, storage, validadores
             ├── hooks/       useCart, useSession
             ├── ui/          InputLabel, Modal, PrimaryButton
@@ -130,6 +149,9 @@ Si no se definen, se usa `http://localhost:<puerto>`.
 - **Errores aislados.** `RemoteBoundary` y los `ErrorBoundary` de React Router evitan que la caída de un remoto (por ejemplo, `auth` apagado) tumbe toda la aplicación.
 - **Tipos entre remotos.** El plugin genera los tipos de los módulos expuestos en `node_modules/@mf-types`, así el host tiene autocompletado al importar `shop/home` o `auth/SessionCard`.
 - **Validación con esquemas de Zod.** Login y registro definen sus reglas en un esquema y React Hook Form lo aplica con `zodResolver`. Las comprobaciones que necesitan la base de datos, como un email ya registrado o una contraseña incorrecta, se muestran en el campo correspondiente con `setError`.
+- **Roles en el usuario.** Cada usuario tiene `role: "admin" | "client"`. La base de datos se migra a la versión 2 para crear la cuenta de administrador; los usuarios guardados antes de esa versión se tratan como clientes.
+- **Protección del panel en los `loader` y `action`.** Cada ruta de `admin` llama a `requireAdmin`, que redirige al login si no hay sesión y responde 403 si el usuario no es administrador. El rol se vuelve a leer desde IndexedDB, porque la sesión en `localStorage` se puede editar a mano. El layout del panel también escucha la sesión para sacar al usuario si la cierra con el panel abierto.
+- **Mutaciones con `action` de React Router.** Crear, editar y eliminar se envían a la `action` de la ruta y React Router vuelve a ejecutar los `loader` después, así el listado siempre muestra los datos actualizados. El formulario se valida con Zod en el navegador y otra vez en la `action`.
 - **React Compiler** activado para no tener que escribir `useMemo`/`useCallback` a mano.
 - **CSS Modules** para que los estilos de un remoto no choquen con los de otro.
 
@@ -137,6 +159,7 @@ Si no se definen, se usa `http://localhost:<puerto>`.
 
 Sigue siendo un proyecto **solo frontend**:
 
+- La protección del panel de administración es solo del lado del cliente: quien tenga acceso al navegador puede modificar IndexedDB. Un backend debería verificar el rol en cada petición.
 - Las contraseñas se guardan en texto plano en IndexedDB. En producción esto lo debe manejar un backend con contraseñas *hasheadas* y tokens.
 - La compra no descuenta stock ni registra pedidos, solo vacía el carrito.
 - Los datos existen solo en el navegador donde se crearon.
