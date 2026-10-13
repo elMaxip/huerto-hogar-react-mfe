@@ -27,11 +27,9 @@ export default function Products() {
     )
     .sort((a, b) => a.id.localeCompare(b.id));
 
-  function confirmDelete() {
-    if (!toDelete) return;
-
+  function confirmDelete(product: Product) {
     fetcher.submit(
-      { intent: "delete", productId: toDelete.id },
+      { intent: "delete", productId: product.id },
       { method: "post" },
     );
     setToDelete(null);
@@ -102,23 +100,27 @@ export default function Products() {
         label="Eliminar producto"
         className={styles.dialog}
       >
-        <h2 className={styles.dialogTitle}>¿Eliminar producto?</h2>
-        <p>
-          Se eliminará <strong>{toDelete?.name}</strong> ({toDelete?.id}) del
-          catálogo. Esta acción no se puede deshacer.
-        </p>
-        <div className={styles.dialogActions}>
-          <PrimaryButton onClick={() => setToDelete(null)}>
-            Cancelar
-          </PrimaryButton>
-          <button
-            type="button"
-            className={styles.danger}
-            onClick={confirmDelete}
-          >
-            Eliminar
-          </button>
-        </div>
+        {toDelete && (
+          <>
+            <h2 className={styles.dialogTitle}>¿Eliminar producto?</h2>
+            <p>
+              Se eliminará <strong>{toDelete.name}</strong> ({toDelete.id}) del
+              catálogo. Esta acción no se puede deshacer.
+            </p>
+            <div className={styles.dialogActions}>
+              <PrimaryButton onClick={() => setToDelete(null)}>
+                Cancelar
+              </PrimaryButton>
+              <button
+                type="button"
+                className={styles.danger}
+                onClick={() => confirmDelete(toDelete)}
+              >
+                Eliminar
+              </button>
+            </div>
+          </>
+        )}
       </Modal>
     </>
   );

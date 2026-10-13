@@ -34,6 +34,9 @@ export function openDatabase(): Promise<IDBDatabase> {
         }
       }
 
+      // Hoy siempre se cumple (DB_VERSION es 2); queda para que una futura
+      // versión 3 no vuelva a crear el administrador al migrar desde la 2
+      /* v8 ignore else -- @preserve */
       if (event.oldVersion < 2) {
         seedAdmin(req.transaction!.objectStore("users"));
       }

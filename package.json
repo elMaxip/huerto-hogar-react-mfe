@@ -6,6 +6,8 @@
     "dev": "pnpm -r --parallel dev",
     "build": "pnpm -r build",
     "preview": "pnpm -r --parallel preview",
-    "lint": "pnpm -r lint"
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "test:coverage": "pnpm -r test:coverage"
   }
 }

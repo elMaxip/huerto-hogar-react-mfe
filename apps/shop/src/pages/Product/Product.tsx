@@ -32,9 +32,7 @@ export default function Product() {
   const inStock = product.stock > 0;
   const hasDiscount = Boolean(product.discount);
 
-  function handleAdd() {
-    if (!product || !inStock) return;
-
+  function handleAdd(product: NonNullable<ProductData["product"]>) {
     const amount = Math.min(
       Math.max(Math.trunc(Number(quantity)) || 1, 1),
       product.stock,
@@ -96,7 +94,10 @@ export default function Product() {
                 onChange={(event) => setQuantity(event.target.value)}
               />
             </label>
-            <PrimaryButton onClick={handleAdd} disabled={!inStock}>
+            <PrimaryButton
+              onClick={() => handleAdd(product)}
+              disabled={!inStock}
+            >
               Añadir al carrito de compras
             </PrimaryButton>
           </div>

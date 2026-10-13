@@ -51,6 +51,7 @@ Como no hay backend, los datos se guardan en el navegador: **IndexedDB** para pr
 | **CSS Modules** | Estilos encapsulados por componente. |
 | **IndexedDB / localStorage** | Persistencia en el navegador. |
 | **ESLint** | Linter con reglas de hooks y React Refresh. |
+| **Vitest + Testing Library** | Pruebas unitarias y de integración (jsdom, jest-dom, user-event y cobertura con V8). |
 
 ## Cómo usar el proyecto
 
@@ -62,6 +63,8 @@ pnpm dev        # levanta host y remotos en modo desarrollo
 pnpm build      # compila todas las apps
 pnpm preview    # sirve las builds en paralelo
 pnpm lint       # ejecuta ESLint en todas las apps
+pnpm test       # ejecuta las pruebas unitarias y de integración
+pnpm test:coverage  # pruebas con reporte de cobertura
 ```
 
 Después abre **http://localhost:5173** (el host). Los puertos están definidos en `federation.config.ts`:

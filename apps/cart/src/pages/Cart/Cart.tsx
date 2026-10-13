@@ -32,8 +32,6 @@ export default function Cart() {
   }
 
   function handleBuy() {
-    if (items.length === 0) return;
-
     clearCart();
     setMessage("¡Gracias por tu compra! Tu carrito quedó vacío.");
   }

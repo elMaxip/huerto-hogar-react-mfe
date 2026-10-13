@@ -1,10 +1,10 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, type RouteObject } from "react-router";
 import RootLayout from "./layouts/RootLayout";
 import RouteError from "./pages/RouteError/RouteError";
 import PageLoader from "./components/PageLoader/PageLoader";
 import NotFound from "./pages/NotFound/NotFound";
 
-export const router = createBrowserRouter([
+export const routes: RouteObject[] = [
   {
     ErrorBoundary: RouteError,
     HydrateFallback: PageLoader,
@@ -47,4 +47,6 @@ export const router = createBrowserRouter([
       { path: "register", lazy: () => import("auth/register") },
     ],
   },
-]);
+];
+
+export const router = createBrowserRouter(routes);
